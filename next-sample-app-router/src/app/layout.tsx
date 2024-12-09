@@ -1,7 +1,7 @@
 import {
   defineEmbeddingSdkConfig,
   MetabaseProvider,
-} from "@metabase/embedding-sdk-react/next";
+} from "@metabase/embedding-sdk-react/nextjs";
 import type { Metadata } from "next";
 
 import localFont from "next/font/local";

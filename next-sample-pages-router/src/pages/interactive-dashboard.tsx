@@ -1,4 +1,4 @@
-import { InteractiveDashboard } from "@metabase/embedding-sdk-react/next";
+import { InteractiveDashboard } from "@metabase/embedding-sdk-react/nextjs";
 
 export default function InteractiveDashboardPage() {
   return (

@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import {
   defineEmbeddingSdkConfig,
   MetabaseProvider,
-} from "@metabase/embedding-sdk-react/next";
+} from "@metabase/embedding-sdk-react/nextjs";
 import Link from "next/link";
 import type { AppProps } from "next/app";
 

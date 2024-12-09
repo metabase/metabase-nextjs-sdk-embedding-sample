@@ -1,4 +1,4 @@
-import { StaticDashboard } from "@metabase/embedding-sdk-react/next";
+import { StaticDashboard } from "@metabase/embedding-sdk-react/nextjs";
 import Link from "next/link";
 
 export default function StaticDashboardPage() {

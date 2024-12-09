@@ -1,4 +1,4 @@
-import { InteractiveQuestion } from "@metabase/embedding-sdk-react/next";
+import { InteractiveQuestion } from "@metabase/embedding-sdk-react/nextjs";
 
 export default function StaticDashboardPage() {
   return (
