@@ -18,6 +18,17 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  min-height: 100dvh;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 200px;
+  padding: 20px;
+  border-right: 1px solid #ccc;
 }
 
 @layer utilities {
