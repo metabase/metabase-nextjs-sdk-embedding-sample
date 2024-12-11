@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@metabase/embedding-sdk-react": "file:../../metabase/resources/embedding-sdk",
+    "@metabase/embedding-sdk-react": "^0.51.11",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.18",
     "react": "^18",
