@@ -3,7 +3,7 @@
 This repository contains sample apps for nextjs 14 that uses Metabase embedding sdk react sdk.
 It include an app using pages router and an app using the app router.
 
-Note: the samples are using the sdk nextjs compatibility layer, which is not yet released on npm.
+Note: the samples are using the sdk nextjs compatibility layer, which is available from version 0.51.11.
 
 ## Instructions
 
