@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import {
-  defineEmbeddingSdkConfig,
+  defineMetabaseAuthConfig,
   MetabaseProvider,
 } from "@metabase/embedding-sdk-react/nextjs";
 import Link from "next/link";
@@ -10,7 +10,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
   throw new Error("Missing NEXT_PUBLIC_METABASE_INSTANCE_URL");
 }
 
-const config = defineEmbeddingSdkConfig({
+const authConfig = defineMetabaseAuthConfig({
   metabaseInstanceUrl: process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL,
   authProviderUri: `/api/metabase/auth`,
 });
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Link href="/static-dashboard">Static Dashboard</Link>
         <Link href="/interactive-dashboard">Interactive Dashboard</Link>
       </nav>
-      <MetabaseProvider config={config}>
+      <MetabaseProvider authConfig={authConfig}>
         <Component {...pageProps} />
       </MetabaseProvider>
     </div>
