@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "PORT=3002 next dev",
+    "dev": "dotenv -- next dev",
     "build": "next build",
-    "start": "PORT=3002 next start",
+    "start": "dotenv -- next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@metabase/embedding-sdk-react": "^0.53.3",
+    "dotenv-cli": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.18",
     "react": "^18",
