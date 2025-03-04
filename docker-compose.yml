@@ -1,0 +1,54 @@
+services:
+  metabase:
+    build:
+      context: .
+      dockerfile: metabase/Dockerfile
+    environment:
+      MB_CONFIG_FILE_PATH: "./app/init-config.yml"
+      MB_JETTY_PORT: "${MB_PORT}"
+      MB_EDITION: "ee"
+      MB_SITE_URL: "http://localhost:${MB_PORT}/"
+      MB_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+      MB_SETUP_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
+      MB_PREMIUM_EMBEDDING_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
+    healthcheck:
+      test: curl --fail -X GET -I "http://localhost:${MB_PORT}/api/health" || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${MB_PORT}:${MB_PORT}"
+
+  next-sample-app-router:
+    depends_on:
+      metabase:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./next-sample-app-router/Dockerfile
+    environment:
+      PORT: "${CLIENT_PORT_APP_ROUTER}"
+      NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
+      METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
+      METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+    ports:
+      - "${CLIENT_PORT_APP_ROUTER}:${CLIENT_PORT_APP_ROUTER}"
+    volumes:
+      - ./next-sample-app-router/src:/app/next-sample-app-router/src
+
+  next-sample-pages-router:
+    depends_on:
+      metabase:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./next-sample-pages-router/Dockerfile
+    environment:
+      PORT: "${CLIENT_PORT_PAGES_ROUTER}"
+      NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
+      METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
+      METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+    ports:
+      - "${CLIENT_PORT_PAGES_ROUTER}:${CLIENT_PORT_PAGES_ROUTER}"
+    volumes:
+      - ./next-sample-pages-router/src:/app/next-sample-pages-router/src

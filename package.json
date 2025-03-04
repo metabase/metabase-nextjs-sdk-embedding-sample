@@ -1,0 +1,10 @@
+{
+  "name": "metabase-nextjs-sdk-embedding-sample",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "npm run docker:up",
+    "docker:up": "docker compose --env-file .env.docker up",
+    "docker:down": "docker compose --env-file .env.docker down --rmi all --volumes"
+  }
+}

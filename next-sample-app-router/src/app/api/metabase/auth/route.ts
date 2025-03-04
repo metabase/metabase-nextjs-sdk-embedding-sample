@@ -8,8 +8,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 }
 
 const METABASE_JWT_SHARED_SECRET = process.env.METABASE_JWT_SHARED_SECRET;
-const NEXT_PUBLIC_METABASE_INSTANCE_URL =
-  process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL;
+const METABASE_INSTANCE_URL = process.env.METABASE_INSTANCE_URL;
 
 export async function GET() {
   // this should come from the session
@@ -31,7 +30,7 @@ export async function GET() {
     METABASE_JWT_SHARED_SECRET
   );
 
-  const ssoUrl = `${NEXT_PUBLIC_METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
+  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
 
   try {
     const response = await fetch(ssoUrl);
