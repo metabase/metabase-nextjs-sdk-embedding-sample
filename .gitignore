@@ -1,1 +1,8 @@
 .DS_Store
+.idea
+.env
+.env.docker
+cypress
+local-dist/*
+!local-dist/.gitkeep
+node_modules

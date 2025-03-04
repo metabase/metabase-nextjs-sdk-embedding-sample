@@ -1,0 +1,10 @@
+version: 1
+config:
+  users:
+    - first_name: John
+      last_name: Doe
+      password: foobarbaz
+      email: john@example.com
+  settings:
+    enable-embedding-sdk: true
+    jwt-enabled: true

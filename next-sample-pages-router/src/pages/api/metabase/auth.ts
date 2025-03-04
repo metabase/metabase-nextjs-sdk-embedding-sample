@@ -9,8 +9,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 }
 
 const METABASE_JWT_SHARED_SECRET = process.env.METABASE_JWT_SHARED_SECRET;
-const NEXT_PUBLIC_METABASE_INSTANCE_URL =
-  process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL;
+const METABASE_INSTANCE_URL = process.env.METABASE_INSTANCE_URL;
 
 type MetabaseSession = {
   id: string;
@@ -39,7 +38,7 @@ export default async function handler(
     // This is the JWT signing secret in your Metabase JWT authentication setting
     METABASE_JWT_SHARED_SECRET
   );
-  const ssoUrl = `${NEXT_PUBLIC_METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
+  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
   try {
     const response = await fetch(ssoUrl, { method: "GET" });
     const session = await response.text();
