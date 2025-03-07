@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> The repository has version branches (e.g. release-x.N.x) that work with the matching version of Metabase's Embedded Analytics SDK. You should use the branch that matches your Metabase version. [More info](https://www.metabase.com/docs/latest/embedding/sdk/version).
+
 # Metabase Embedding React SDK nextjs sample apps
 
 This repository contains sample apps for Next.js 14 that uses Metabase Embedding SDK.
