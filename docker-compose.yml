@@ -26,6 +26,12 @@ services:
     build:
       context: .
       dockerfile: ./next-sample-app-router/Dockerfile
+      args:
+        PORT: "${CLIENT_PORT_APP_ROUTER}"
+        NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
+        METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
+        METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+        WATCH: '${WATCH}'
     environment:
       PORT: "${CLIENT_PORT_APP_ROUTER}"
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
@@ -43,6 +49,12 @@ services:
     build:
       context: .
       dockerfile: ./next-sample-pages-router/Dockerfile
+      args:
+        PORT: "${CLIENT_PORT_APP_ROUTER}"
+        NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
+        METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
+        METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+        WATCH: '${WATCH}'
     environment:
       PORT: "${CLIENT_PORT_PAGES_ROUTER}"
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"

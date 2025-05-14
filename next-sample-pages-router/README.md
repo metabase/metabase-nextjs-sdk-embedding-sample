@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+### Using an existing running MB instance
+
 First, run the development server:
 
 ```bash
@@ -23,6 +25,15 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+### Using Docker
+
+- Clone `.env.docker.example` to `.env.docker` and set the proper `PREMIUM_EMBEDDING_TOKEN` value.
+- If you want to test a local Embedding SDK version, copy it to the `local-dist/embedding-sdk` folder.
+- Run Docker via `yarn docker:up` for the `production` build or `WATCH=true yarn docker:up` for the development build with the `watch` support.
+    - The command launches containers with the local MB instance, and both App and Pages router Sample Apps.
+    - Visit `http://localhost:4400` and `http://localhost:4401`.
+- To stop containers run `yarn docker:down`.
 
 ## Learn More
 
