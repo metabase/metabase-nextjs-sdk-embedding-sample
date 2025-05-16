@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -- next dev",
-    "build": "next build",
+    "build": "dotenv -- next build",
     "start": "dotenv -- next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@metabase/embedding-sdk-react": "^0.54.10",
+    "@metabase/embedding-sdk-react": "^0.54.11",
     "dotenv-cli": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.18",
