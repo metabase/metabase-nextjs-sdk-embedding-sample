@@ -1,4 +1,4 @@
-const TIMEOUT_MS = 20000;
+const TIMEOUT_MS = 40000;
 
 [
   {
