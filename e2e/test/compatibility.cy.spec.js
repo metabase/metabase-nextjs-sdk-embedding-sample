@@ -68,5 +68,20 @@ const TIMEOUT_MS = 20000;
         cy.findByTestId("dashboard-grid").should("exist");
       });
     });
+
+    it.only("should download an Interactive Dashboard", () => {
+      cy.visit({
+        url: "/interactive-dashboard",
+      });
+
+      expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
+      cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
+        cy.findByTestId("fixed-width-dashboard-header").within(() => {
+          cy.findByText('Export tab as PDF').click();
+        });
+
+        cy.readFile('cypress/downloads/E-commerce Insights.pdf', {timeout: TIMEOUT_MS}).should('exist');
+      });
+    });
   });
 });
