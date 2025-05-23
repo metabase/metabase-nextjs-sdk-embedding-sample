@@ -77,7 +77,7 @@ const TIMEOUT_MS = 20000;
       expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
       cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
         cy.findByTestId("fixed-width-dashboard-header").within(() => {
-          cy.findByText('Export tab as PDF').click();
+          cy.get('button svg.Icon-download, button svg.Icon-document').first().click();
         });
 
         cy.readFile('cypress/downloads/E-commerce Insights.pdf', {timeout: TIMEOUT_MS}).should('exist');
