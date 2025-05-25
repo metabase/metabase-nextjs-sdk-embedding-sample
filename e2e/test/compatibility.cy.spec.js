@@ -94,6 +94,9 @@ const TIMEOUT_MS = 40000;
     });
 
     it("should load a moment locale", () => {
+      const time = new Date('2025-01-01')
+      cy.clock(time, ['Date'])
+
       cy.visit({
         url: "/interactive-question?locale=es",
       });
@@ -101,17 +104,20 @@ const TIMEOUT_MS = 40000;
       cy.findByText('Filtro', {timeout: TIMEOUT_MS}).click();
       cy.get('[data-element-id="mantine-popover"]').within(() => {
         cy.findByText('Created At').click();
-        cy.findByText(/(Fechas específicas…|Rango de fechas fijo…)/).click();
+        // Different texts for 54 and 55
+        cy.findByText(/(Fechas relativas…|Rango de fechas relativo…)/).click();
       })
 
       cy.findByTestId('date-filter-picker').within(() => {
-        const monthName = new Intl.DateTimeFormat('es-ES', { month: 'short' }).format(new Date());
 
-        cy.findByText(new RegExp(monthName, 'i')).should('exist');
+        cy.findByText('dic. 2–31, 2024').should('exist');
       })
     });
 
     it("should load a dayjs locale", () => {
+      const time = new Date('2025-01-01')
+      cy.clock(time, ['Date'])
+
       cy.visit({
         url: "/interactive-question?locale=es",
       });
@@ -124,9 +130,7 @@ const TIMEOUT_MS = 40000;
       })
 
       cy.findByTestId('date-filter-picker').within(() => {
-        const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(new Date());
-
-        cy.findByText(new RegExp(monthName, 'i')).should('exist');
+        cy.findByText('enero 2025').should('exist');
       })
     });
   });
