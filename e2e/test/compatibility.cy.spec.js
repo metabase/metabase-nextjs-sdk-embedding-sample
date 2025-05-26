@@ -101,17 +101,11 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-question?locale=es",
       });
 
-      cy.findByText('Filtro', {timeout: TIMEOUT_MS}).click();
-      cy.get('[data-element-id="mantine-popover"]').within(() => {
-        cy.findByText('Created At').click();
-        // Different texts for 54 and 55
-        cy.findByText(/(Fechas relativas…|Rango de fechas relativo…)/).click();
-      })
-
-      cy.findByTestId('date-filter-picker').within(() => {
-
-        cy.findByText('dic. 2–31, 2024').should('exist');
-      })
+      cy.findAllByTestId('cell-data').then((cells) => {
+        const texts = [...cells].map((el) => el.textContent);
+        expect(texts.join(' ')).to.include('febrero');
+        expect(texts.join(' ')).to.include('mayo');
+      });
     });
 
     it("should load a dayjs locale", () => {
