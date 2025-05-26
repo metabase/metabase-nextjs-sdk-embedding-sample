@@ -1,4 +1,3 @@
-import { useSearchParams } from 'next/navigation'
 import {
   MetabaseProvider,
   defineMetabaseAuthConfig,
@@ -56,17 +55,11 @@ const theme = defineMetabaseTheme({
   },
 });
 
-export const AppProvider = ({children}: PropsWithChildren) => {
-  const searchParams = useSearchParams()
-  const locale = searchParams.get('locale') ?? undefined
-
-  return (
-    <MetabaseProvider
-      authConfig={authConfig}
-      theme={theme}
-      locale={locale}
-    >
-      {children}
-    </MetabaseProvider>
-  )
-}
+export const AppProvider = ({children}: PropsWithChildren) => (
+  <MetabaseProvider
+    authConfig={authConfig}
+    theme={theme}
+  >
+    {children}
+  </MetabaseProvider>
+)
