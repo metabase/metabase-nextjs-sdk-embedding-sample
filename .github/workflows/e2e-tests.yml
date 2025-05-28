@@ -3,12 +3,10 @@ name: E2E tests
 on:
   push:
     branches:
-      - "main"
       - "*-stable"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - "main"
       - "*-stable"
 
 jobs:
