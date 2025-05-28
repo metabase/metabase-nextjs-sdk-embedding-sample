@@ -11,6 +11,7 @@ services:
       MB_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
       MB_SETUP_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
       MB_PREMIUM_EMBEDDING_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
+      MB_JWT_IDENTITY_PROVIDER_URI: "http://localhost:${CLIENT_PORT_APP_ROUTER}/api/metabase/auth"
     healthcheck:
       test: curl --fail -X GET -I "http://localhost:${MB_PORT}/api/health" || exit 1
       interval: 15s
@@ -31,7 +32,7 @@ services:
         NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
         METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
         METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
-        WATCH: '${WATCH}'
+        WATCH: "${WATCH}"
     environment:
       PORT: "${CLIENT_PORT_APP_ROUTER}"
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
@@ -54,7 +55,7 @@ services:
         NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
         METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
         METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
-        WATCH: '${WATCH}'
+        WATCH: "${WATCH}"
     environment:
       PORT: "${CLIENT_PORT_PAGES_ROUTER}"
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
