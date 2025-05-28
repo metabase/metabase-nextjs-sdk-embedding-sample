@@ -38,7 +38,13 @@ export default async function handler(
     // This is the JWT signing secret in your Metabase JWT authentication setting
     METABASE_JWT_SHARED_SECRET
   );
-  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
+
+  if (req.query.response === "json") {
+    res.write({ jwt: token });
+    return res.end();
+  }
+
+  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?jwt=${token}`;
   try {
     const response = await fetch(ssoUrl, { method: "GET" });
     const session = await response.text();
