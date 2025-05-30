@@ -19,7 +19,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<JsonResponse | string>
 ) {
-  // In a real app you'd pull this from your session/cookie
   const user = {
     email: "john@example.com",
     firstName: "John",
@@ -27,7 +26,6 @@ export default async function handler(
     group: "admin",
   };
 
-  // Sign a Metabase SSO JWT (10min expiration)
   const token = jwt.sign(
     {
       email: user.email,
@@ -39,17 +37,18 @@ export default async function handler(
     METABASE_JWT_SHARED_SECRET
   );
 
-  // If ?response=json, return { jwt }
-  if (req.query.response === "json") {
+  const wantsJson = req.query.response === "json"
+
+  if (wantsJson) {
     return res.status(200).json({ jwt: token });
   }
-  // Otherwise proxy the SSO request to Metabase
+
   const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?jwt=${token}`;
 
   try {
-    const mbRes = await fetch(ssoUrl);
-    const html = await mbRes.text();
-    return res.status(mbRes.status).send(html);
+    const response = await fetch(ssoUrl);
+    const session = await response.text();
+    return res.status(response.status).send(session);
   } catch (err) {
     console.error("Metabase SSO error:", err);
     const msg = err instanceof Error ? err.message : "Unknown error";
