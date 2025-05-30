@@ -13,6 +13,14 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 
 const authConfig = defineMetabaseAuthConfig({
   metabaseInstanceUrl: process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL,
+  fetchRequestToken: async () => {
+    const response = await fetch('/api/metabase/auth?response=json', {
+      method: "GET",
+      credentials: "include",
+    });
+
+    return await response.json();
+  },
 });
 
 const theme = defineMetabaseTheme({
