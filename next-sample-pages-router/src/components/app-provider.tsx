@@ -11,7 +11,6 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 
 const authConfig = defineMetabaseAuthConfig({
   metabaseInstanceUrl: process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL,
-  authProviderUri: `/api/metabase/auth`,
 });
 
 const theme = defineMetabaseTheme({
