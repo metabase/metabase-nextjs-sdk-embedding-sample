@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@metabase/embedding-sdk-react": "^0.54.11",
+    "@metabase/embedding-sdk-react": "^0.55.2-nightly",
     "dotenv-cli": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.18",
