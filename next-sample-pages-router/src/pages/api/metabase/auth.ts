@@ -1,25 +1,24 @@
+// pages/api/auth/sso.ts
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 
 if (!process.env.METABASE_JWT_SHARED_SECRET) {
   throw new Error("Missing METABASE_JWT_SHARED_SECRET");
 }
-if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
-  throw new Error("Missing NEXT_PUBLIC_METABASE_INSTANCE_URL");
+if (!process.env.METABASE_INSTANCE_URL) {
+  throw new Error("Missing METABASE_INSTANCE_URL");
 }
 
 const METABASE_JWT_SHARED_SECRET = process.env.METABASE_JWT_SHARED_SECRET;
 const METABASE_INSTANCE_URL = process.env.METABASE_INSTANCE_URL;
 
-type MetabaseSession = {
-  id: string;
-};
+type JsonResponse = { jwt: string };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<MetabaseSession>
+  res: NextApiResponse<JsonResponse | string>
 ) {
-  // this should come from the session
   const user = {
     email: "john@example.com",
     firstName: "John",
@@ -33,25 +32,26 @@ export default async function handler(
       first_name: user.firstName,
       last_name: user.lastName,
       groups: [user.group],
-      exp: Math.round(Date.now() / 1000) + 60 * 10, // 10 minutes expiration
+      exp: Math.floor(Date.now() / 1000) + 60 * 10,
     },
-    // This is the JWT signing secret in your Metabase JWT authentication setting
     METABASE_JWT_SHARED_SECRET
   );
-  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
-  try {
-    const response = await fetch(ssoUrl, { method: "GET" });
-    const session = await response.text();
 
-    res.write(session);
-    return res.end();
-  } catch (error) {
-    console.log("error", error);
-    if (error instanceof Error) {
-      res.write(error.message);
-      return res.end();
-    }
-    res.write("unknown error");
-    return res.end();
+  const wantsJson = req.query.response === "json"
+
+  if (wantsJson) {
+    return res.status(200).json({ jwt: token });
+  }
+
+  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?jwt=${token}`;
+
+  try {
+    const response = await fetch(ssoUrl);
+    const session = await response.text();
+    return res.status(response.status).send(session);
+  } catch (err) {
+    console.error("Metabase SSO error:", err);
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    return res.status(500).send(msg);
   }
 }

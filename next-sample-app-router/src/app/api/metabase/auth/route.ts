@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { NextResponse } from 'next/server';
 
 if (!process.env.METABASE_JWT_SHARED_SECRET) {
   throw new Error("Missing METABASE_JWT_SHARED_SECRET");
@@ -10,7 +11,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 const METABASE_JWT_SHARED_SECRET = process.env.METABASE_JWT_SHARED_SECRET;
 const METABASE_INSTANCE_URL = process.env.METABASE_INSTANCE_URL;
 
-export async function GET() {
+export async function GET(req: Request) {
   // this should come from the session
   const user = {
     email: "john@example.com",
@@ -30,7 +31,14 @@ export async function GET() {
     METABASE_JWT_SHARED_SECRET
   );
 
-  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?token=true&jwt=${token}`;
+  const url = new URL(req.url)
+  const wantsJson = url.searchParams.get('response') === 'json'
+
+  if (wantsJson) {
+    return NextResponse.json({ jwt: token })
+  }
+
+  const ssoUrl = `${METABASE_INSTANCE_URL}/auth/sso?jwt=${token}`;
 
   try {
     const response = await fetch(ssoUrl);
