@@ -10,7 +10,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 const METABASE_JWT_SHARED_SECRET = process.env.METABASE_JWT_SHARED_SECRET;
 const METABASE_INSTANCE_URL = process.env.METABASE_INSTANCE_URL;
 
-export async function GET(req, res) {
+export async function GET(req) {
   // this should come from the session
   const user = {
     email: "john@example.com",
