@@ -8,8 +8,8 @@ const TIMEOUT_MS = 40000;
   {
     name: "next-sample-pages-router",
     baseUrl: Cypress.env("BASE_URL_PAGES_ROUTER"),
-  }
-].forEach(({name, baseUrl}) => {
+  },
+].forEach(({ name, baseUrl }) => {
   describe(`Embedding SDK: ${name} compatibility`, () => {
     beforeEach(() => {
       Cypress.config("baseUrl", baseUrl);
@@ -20,7 +20,9 @@ const TIMEOUT_MS = 40000;
         url: "/static-question",
       });
 
-      expect(cy.findByTestId("visualization-root", {timeout: TIMEOUT_MS}).should("exist"));
+      cy.findByTestId("visualization-root", { timeout: TIMEOUT_MS }).should(
+        "exist",
+      );
     });
 
     it("should open an Interactive Question", () => {
@@ -28,11 +30,9 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-question",
       });
 
-      expect(cy.findByText("Orders + People", {timeout: TIMEOUT_MS}).should("exist"));
-
-      expect(cy.findByTestId("interactive-question-result-toolbar").should("exist"));
-
-      expect(cy.findByTestId("visualization-root").should("exist"));
+      cy.findByText("Orders + People", { timeout: TIMEOUT_MS }).should("exist");
+      cy.findByTestId("interactive-question-result-toolbar").should("exist");
+      cy.findByTestId("visualization-root").should("exist");
     });
 
     it("should open a Static Dashboard", () => {
@@ -40,11 +40,16 @@ const TIMEOUT_MS = 40000;
         url: "/static-dashboard",
       });
 
-      expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
-      cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      sdkRoot().should("exist");
+      sdkRoot().within(() => {
+        cy.findByRole("heading", { name: "Static Dashboard Example" }).should(
+          "exist",
+        );
 
-        cy.findByText("E-commerce Insights").should("exist");
+        cy.findByRole("heading", {
+          name: "E-commerce Insights",
+          timeout: TIMEOUT_MS,
+        }).should("exist");
 
         cy.findByTestId("fixed-width-filters").should("exist");
 
@@ -57,11 +62,16 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-dashboard",
       });
 
-      expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
-      cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      sdkRoot().should("exist");
+      sdkRoot().within(() => {
+        cy.findByRole("heading", {
+          name: "Interactive Dashboard Example",
+        }).should("exist");
 
-        cy.findByText("E-commerce Insights").should("exist");
+        cy.findByRole("heading", {
+          name: "E-commerce Insights",
+          timeout: TIMEOUT_MS,
+        }).should("exist");
 
         cy.findByTestId("fixed-width-filters").should("exist");
 
@@ -70,3 +80,7 @@ const TIMEOUT_MS = 40000;
     });
   });
 });
+
+function sdkRoot() {
+  return cy.get("#metabase-sdk-root", { timeout: TIMEOUT_MS });
+}
