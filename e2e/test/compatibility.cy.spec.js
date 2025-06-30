@@ -20,10 +20,8 @@ const TIMEOUT_MS = 40000;
         url: "/static-question",
       });
 
-      expect(
-        cy
-          .findByTestId("visualization-root", { timeout: TIMEOUT_MS })
-          .should("exist"),
+      cy.findByTestId("visualization-root", { timeout: TIMEOUT_MS }).should(
+        "exist",
       );
     });
 
@@ -32,16 +30,9 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-question",
       });
 
-      expect(
-        cy
-          .findByText("Orders + People", { timeout: TIMEOUT_MS })
-          .should("exist"),
-      );
-      expect(
-        cy.findByTestId("interactive-question-result-toolbar").should("exist"),
-      );
-
-      expect(cy.findByTestId("visualization-root").should("exist"));
+      cy.findByText("Orders + People", { timeout: TIMEOUT_MS }).should("exist");
+      cy.findByTestId("interactive-question-result-toolbar").should("exist");
+      cy.findByTestId("visualization-root").should("exist");
     });
 
     it("should open a Static Dashboard", () => {
