@@ -37,7 +37,6 @@ const TIMEOUT_MS = 40000;
           .findByText("Orders + People", { timeout: TIMEOUT_MS })
           .should("exist"),
       );
-
       expect(
         cy.findByTestId("interactive-question-result-toolbar").should("exist"),
       );
@@ -50,13 +49,16 @@ const TIMEOUT_MS = 40000;
         url: "/static-dashboard",
       });
 
-      expect(
-        cy.findByTestId("embed-frame", { timeout: TIMEOUT_MS }).should("exist"),
-      );
-      cy.findByTestId("embed-frame", { timeout: TIMEOUT_MS }).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      sdkRoot().should("exist");
+      sdkRoot().within(() => {
+        cy.findByRole("heading", { name: "Static Dashboard Example" }).should(
+          "exist",
+        );
 
-        cy.findByText("E-commerce Insights").should("exist");
+        cy.findByRole("heading", {
+          name: "E-commerce Insights",
+          timeout: TIMEOUT_MS,
+        }).should("exist");
 
         cy.findByTestId("fixed-width-filters").should("exist");
 
@@ -69,13 +71,16 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-dashboard",
       });
 
-      expect(
-        cy.findByTestId("embed-frame", { timeout: TIMEOUT_MS }).should("exist"),
-      );
-      cy.findByTestId("embed-frame", { timeout: TIMEOUT_MS }).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      sdkRoot().should("exist");
+      sdkRoot().within(() => {
+        cy.findByRole("heading", {
+          name: "Interactive Dashboard Example",
+        }).should("exist");
 
-        cy.findByText("E-commerce Insights").should("exist");
+        cy.findByRole("heading", {
+          name: "E-commerce Insights",
+          timeout: TIMEOUT_MS,
+        }).should("exist");
 
         cy.findByTestId("fixed-width-filters").should("exist");
 
@@ -84,3 +89,7 @@ const TIMEOUT_MS = 40000;
     });
   });
 });
+
+function sdkRoot() {
+  return cy.get("#metabase-sdk-root", { timeout: TIMEOUT_MS });
+}
