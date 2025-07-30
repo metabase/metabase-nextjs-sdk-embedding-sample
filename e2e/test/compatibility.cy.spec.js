@@ -40,8 +40,8 @@ const TIMEOUT_MS = 40000;
         url: "/static-dashboard",
       });
 
-      sdkRoot().should("exist");
-      sdkRoot().within(() => {
+      main().should("exist");
+      main().within(() => {
         cy.findByRole("heading", { name: "Static Dashboard Example" }).should(
           "exist",
         );
@@ -62,8 +62,8 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-dashboard",
       });
 
-      sdkRoot().should("exist");
-      sdkRoot().within(() => {
+      main().should("exist");
+      main().within(() => {
         cy.findByRole("heading", {
           name: "Interactive Dashboard Example",
         }).should("exist");
@@ -81,6 +81,6 @@ const TIMEOUT_MS = 40000;
   });
 });
 
-function sdkRoot() {
-  return cy.get("#metabase-sdk-root", { timeout: TIMEOUT_MS });
+function main() {
+  return cy.get("main", { timeout: TIMEOUT_MS });
 }
