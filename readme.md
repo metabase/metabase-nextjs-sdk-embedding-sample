@@ -31,13 +31,20 @@ This option should be used if you don't want to test Metabase Embedding SDK with
 
 From the root directory:
 - Copy `.env.docker.example` to `.env.docker` and replace `<your_enterprise_token>` with your premium embedding token
-- Start all services in Docker with `yarn start`
+- Start all services in Docker with `yarn docker:up`
 
 It will:
-- poll a Metabase image and run it
-- build and run both `next-sample-app-router` and `next-sample-pages-router` apps
+- Poll a Metabase image and run it
+- Build and run containers with both `next-sample-app-router` and `next-sample-pages-router` apps and run it
 
 The pages router sample will start on port 4401 and the app router sample will start on port 4400.
+
+#### Local development (For Metabase developers)
+
+- To run containers with a locally built `metabase.jar`, copy it to the `./local-dist` folder as `./local-dist/metabase.jar`.
+- To run containers with a locally built Embedding SDK package, copy it to the `./local-dist` folder as `./local-dist/embedding-sdk`.
+- Run `yarn docker:local-dist:up` to start containers and use locally built dist from the `./local-dist` folder.
+- To remove containers and images completely run `yarn docker:rm`.
 
 ## Authentication
 
