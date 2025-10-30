@@ -1,16 +1,16 @@
 services:
   metabase:
-    build:
-      context: .
-      dockerfile: metabase/Dockerfile
+    image: metabase/metabase-enterprise:v1.55.x
     environment:
-      MB_CONFIG_FILE_PATH: "./app/init-config.yml"
+      MB_CONFIG_FILE_PATH: "./app/config.yml"
       MB_JETTY_PORT: "${MB_PORT}"
       MB_EDITION: "ee"
       MB_SITE_URL: "http://localhost:${MB_PORT}/"
       MB_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
       MB_SETUP_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
       MB_PREMIUM_EMBEDDING_TOKEN: "${PREMIUM_EMBEDDING_TOKEN}"
+      MB_RUN_MODE: "${MB_RUN_MODE}"
+      METASTORE_DEV_SERVER_URL: "${METASTORE_DEV_SERVER_URL}"
       MB_JWT_IDENTITY_PROVIDER_URI: "http://localhost:${AUTH_PROVIDER_PORT}/sso/metabase"
     healthcheck:
       test: curl --fail -X GET -I "http://localhost:${MB_PORT}/api/health" || exit 1
@@ -19,6 +19,8 @@ services:
       retries: 10
     ports:
       - "${MB_PORT}:${MB_PORT}"
+    volumes:
+      - ./metabase/config.yml:/app/config.yml
 
   next-sample-app-router:
     depends_on:
@@ -38,6 +40,11 @@ services:
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
       METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
       METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+    healthcheck:
+      test: curl --fail -X GET -I "http://localhost:${CLIENT_PORT_APP_ROUTER}/" || exit 1
+      interval: 2s
+      timeout: 2s
+      retries: 5
     ports:
       - "${CLIENT_PORT_APP_ROUTER}:${CLIENT_PORT_APP_ROUTER}"
     volumes:
@@ -51,7 +58,7 @@ services:
       context: .
       dockerfile: ./next-sample-pages-router/Dockerfile
       args:
-        PORT: "${CLIENT_PORT_APP_ROUTER}"
+        PORT: "${CLIENT_PORT_PAGES_ROUTER}"
         NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
         METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
         METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
@@ -61,6 +68,11 @@ services:
       NEXT_PUBLIC_METABASE_INSTANCE_URL: "http://localhost:${MB_PORT}"
       METABASE_INSTANCE_URL: "http://metabase:${MB_PORT}"
       METABASE_JWT_SHARED_SECRET: "${METABASE_JWT_SHARED_SECRET}"
+    healthcheck:
+      test: curl --fail -X GET -I "http://localhost:${CLIENT_PORT_PAGES_ROUTER}/" || exit 1
+      interval: 2s
+      timeout: 2s
+      retries: 5
     ports:
       - "${CLIENT_PORT_PAGES_ROUTER}:${CLIENT_PORT_PAGES_ROUTER}"
     volumes:
