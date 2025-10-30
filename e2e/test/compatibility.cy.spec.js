@@ -40,13 +40,13 @@ const TIMEOUT_MS = 40000;
         url: "/static-dashboard",
       });
 
-      expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
-      cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      expect(cy.findByTestId("dashboard", {timeout: TIMEOUT_MS}).should("exist"));
+      cy.findByTestId("dashboard", {timeout: TIMEOUT_MS}).within(() => {
+        cy.findByTestId("dashboard-name-heading").should("exist");
 
         cy.findByText("E-commerce Insights").should("exist");
 
-        cy.findByTestId("fixed-width-filters").should("exist");
+        cy.findByTestId("dashboard-parameters-widget-container").should("exist");
 
         cy.findByTestId("dashboard-grid").should("exist");
       });
@@ -57,13 +57,13 @@ const TIMEOUT_MS = 40000;
         url: "/interactive-dashboard",
       });
 
-      expect(cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).should("exist"));
-      cy.findByTestId("embed-frame", {timeout: TIMEOUT_MS}).within(() => {
-        cy.findByTestId("embed-frame-header").should("exist");
+      expect(cy.findByTestId("dashboard", {timeout: TIMEOUT_MS}).should("exist"));
+      cy.findByTestId("dashboard", {timeout: TIMEOUT_MS}).within(() => {
+        cy.findByTestId("dashboard-name-heading").should("exist");
 
         cy.findByText("E-commerce Insights").should("exist");
 
-        cy.findByTestId("fixed-width-filters").should("exist");
+        cy.findByTestId("dashboard-parameters-widget-container").should("exist");
 
         cy.findByTestId("dashboard-grid").should("exist");
       });
