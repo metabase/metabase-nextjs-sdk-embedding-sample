@@ -1,4 +1,4 @@
-import { StaticQuestion } from "@metabase/embedding-sdk-react/nextjs";
+import { StaticQuestion } from "@metabase/embedding-sdk-react";
 
 export default function StaticQuestionPage() {
   return (

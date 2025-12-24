@@ -1,9 +1,9 @@
 import {
   MetabaseProvider,
   defineMetabaseAuthConfig,
-  defineMetabaseTheme
-} from '@metabase/embedding-sdk-react/nextjs';
-import { PropsWithChildren } from 'react';
+  defineMetabaseTheme,
+} from "@metabase/embedding-sdk-react";
+import { PropsWithChildren } from "react";
 
 if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
   throw new Error("Missing NEXT_PUBLIC_METABASE_INSTANCE_URL");
@@ -12,7 +12,7 @@ if (!process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL) {
 const authConfig = defineMetabaseAuthConfig({
   metabaseInstanceUrl: process.env.NEXT_PUBLIC_METABASE_INSTANCE_URL,
   fetchRequestToken: async () => {
-    const response = await fetch('/api/metabase/auth?response=json', {
+    const response = await fetch("/api/metabase/auth?response=json", {
       method: "GET",
       credentials: "include",
     });
@@ -62,11 +62,8 @@ const theme = defineMetabaseTheme({
   },
 });
 
-export const AppProvider = ({children}: PropsWithChildren) => (
-  <MetabaseProvider
-    authConfig={authConfig}
-    theme={theme}
-  >
+export const AppProvider = ({ children }: PropsWithChildren) => (
+  <MetabaseProvider authConfig={authConfig} theme={theme}>
     {children}
   </MetabaseProvider>
-)
+);
