@@ -1,6 +1,6 @@
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > **To use your own Metabase**, use the release branch that matches your Metabase Enterprise Edition's major version. For example, if you're using Metabase 1.53.x, use the `53-stable` branch. [More info](https://www.metabase.com/docs/latest/embedding/sdk/version).
-> 
+>
 > **To spin up a new Metabase**, you can use any version branch and run the sample app in the [Docker container](#run-both-apps--a-sample-metabase-proenterprise-instance-in-docker) with the corresponding version of Metabase. You'll need a Pro/Enterprise token, which you can get with a [free trial of Pro](https://www.metabase.com/pricing/)..
 
 # Metabase Embedding React SDK nextjs sample apps
@@ -8,7 +8,7 @@
 This repository contains sample apps for Next.js 14 that uses Metabase Embedding SDK.
 It includes an app using pages router and an app using the app router.
 
-Note: the samples are using the sdk Next.js compatibility layer, which is available from version 0.51.11.
+Note: Please use Metabase version 57 or above to test these sample apps.
 
 ## Instructions
 
