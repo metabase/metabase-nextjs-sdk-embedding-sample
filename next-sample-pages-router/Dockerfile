@@ -24,11 +24,14 @@ COPY ./local-dist ./local-dist
 
 WORKDIR /app/next-sample-pages-router
 
+RUN node -p "require('./node_modules/react-dom/package.json').version"
+
 RUN npm ci
 
 RUN if [ -d "../local-dist/embedding-sdk" ]; then \
       echo "Local embedding-sdk dist is found in ../local-dist/embedding-sdk, installing it..."; \
       npm install file:../local-dist/embedding-sdk --install-links; \
+      ls -1t /root/.npm/_logs/*eresolve-report.txt | head -n 1 | xargs -r cat;  \
     else \
       echo "Local embedding-sdk dist is not found in ../local-dist/embedding-sdk, skipping copy"; \
     fi
