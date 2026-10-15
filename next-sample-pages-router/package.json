@@ -12,7 +12,7 @@
     "@metabase/embedding-sdk-react": "^0.64.0",
     "dotenv-cli": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "next": "14.2.18",
+    "next": "15.5.27",
     "react": "^18",
     "react-dom": "^18"
   },
